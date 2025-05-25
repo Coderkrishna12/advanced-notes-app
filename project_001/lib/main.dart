@@ -4,10 +4,68 @@ import 'package:advanced_notes_app/models/note_adapter.dart' as noteAdapter;
 import 'package:advanced_notes_app/providers/notes_provider.dart';
 import 'package:advanced_notes_app/router.dart';
 import 'package:advanced_notes_app/services/notes_services.dart';
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
+
+// Define AppTheme class for dark theme
+class AppTheme {
+  static ThemeData get darkTheme {
+    return ThemeData(
+      brightness: Brightness.dark,
+      primarySwatch: Colors.teal,
+      primaryColor: const Color(0xFF64FFDA),
+      scaffoldBackgroundColor: const Color(0xFF0A0A0B),
+      appBarTheme: const AppBarTheme(
+        backgroundColor: Color(0xFF0A0A0B),
+        elevation: 0,
+        systemOverlayStyle: SystemUiOverlayStyle.light,
+      ),
+      cardTheme: CardTheme(
+        color: const Color(0xFF1A1A2E),
+        elevation: 8,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16),
+        ),
+      ),
+      elevatedButtonTheme: ElevatedButtonThemeData(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: const Color(0xFF64FFDA),
+          foregroundColor: const Color(0xFF0A0A0B),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
+          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+        ),
+      ),
+      inputDecorationTheme: InputDecorationTheme(
+        filled: true,
+        fillColor: const Color(0xFF1A1A2E),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: BorderSide.none,
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: const BorderSide(color: Color(0xFF64FFDA), width: 2),
+        ),
+      ),
+      textTheme: const TextTheme(
+        headlineLarge: TextStyle(
+          color: Colors.white,
+          fontWeight: FontWeight.bold,
+        ),
+        bodyLarge: TextStyle(
+          color: Colors.white,
+        ),
+        bodyMedium: TextStyle(
+          color: Colors.white70,
+        ),
+      ),
+    );
+  }
+}
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -28,76 +86,9 @@ class MyApp extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (_) => NotesProvider(locator<NotesService>()),
       child: MaterialApp.router(
+        title: 'Advanced Notes App',
         routerConfig: _appRouter.config(),
-        theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-          useMaterial3: true,
-        ),
-      ),
-    );
-  }
-}
-
-@RoutePage()
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, this.title = 'Flutter Demo Home Page'});
-
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    final notesProvider = Provider.of<NotesProvider>(context, listen: false);
-    final note = Note(
-      id: '$_counter',
-      title: 'Test Note $_counter',
-      content: 'This is a test note',
-      category: 'General',
-      createdAt: DateTime.now(),
-      updatedAt: DateTime.now(),
-    );
-    notesProvider.addNote(note);
-    setState(() {
-      _counter++;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.home),
-            onPressed: () => context.router.push(const HomeRoute()),
-          ),
-        ],
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
+        theme: AppTheme.darkTheme, // Use the new dark theme
       ),
     );
   }
