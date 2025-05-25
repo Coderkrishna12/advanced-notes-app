@@ -1,30 +1,37 @@
 import 'package:advanced_notes_app/locator.dart';
+import 'package:advanced_notes_app/models/note.dart';
 import 'package:advanced_notes_app/models/note_adapter.dart';
+import 'package:advanced_notes_app/providers/notes_provider.dart';
+import 'package:advanced_notes_app/router.dart';
+import 'package:advanced_notes_app/services/notes_services.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:advanced_notes_app/models/note.dart';
-import 'package:advanced_notes_app/router.dart';
+import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
-  setupLocator();
   Hive.registerAdapter(NoteAdapter()); // Register the adapter
   await Hive.openBox<Note>('notes');
+  setupLocator(); // Initialize dependency injection
   runApp(MyApp());
 }
-// Initialize Hive
 
 class MyApp extends StatelessWidget {
+  MyApp({super.key});
+
   final _appRouter = AppRouter();
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      routerConfig: _appRouter.config(),
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
+    return ChangeNotifierProvider(
+      create: (_) => NotesProvider(Hive.box<Note>('notes') as NotesService),
+      child: MaterialApp.router(
+        routerConfig: _appRouter.config(),
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+          useMaterial3: true,
+        ),
       ),
     );
   }
