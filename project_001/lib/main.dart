@@ -1,3 +1,4 @@
+import 'package:advanced_notes_app/locator.dart';
 import 'package:advanced_notes_app/models/note_adapter.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -7,10 +8,12 @@ import 'package:advanced_notes_app/router.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
+  setupLocator();
   Hive.registerAdapter(NoteAdapter()); // Register the adapter
   await Hive.openBox<Note>('notes');
   runApp(MyApp());
 }
+// Initialize Hive
 
 class MyApp extends StatelessWidget {
   final _appRouter = AppRouter();

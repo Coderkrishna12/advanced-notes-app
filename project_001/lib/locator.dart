@@ -7,6 +7,7 @@ void setupLocator() {
   locator.registerSingletonAsync<NotesService>(() async {
     final service = NotesService();
     await service.init();
+    await service.init();
     return service;
   });
 }
