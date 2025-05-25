@@ -3,7 +3,7 @@ import 'package:advanced_notes_app/models/note.dart';
 
 class NoteAdapter extends TypeAdapter<Note> {
   @override
-  final int typeId = 0; // Unique ID for the Note type
+  final int typeId = 0; // Must match the typeId in Note
 
   @override
   Note read(BinaryReader reader) {
@@ -11,6 +11,7 @@ class NoteAdapter extends TypeAdapter<Note> {
       id: reader.readString(),
       title: reader.readString(),
       content: reader.readString(),
+      category: reader.readString().isEmpty ? null : reader.readString(),
       createdAt: DateTime.parse(reader.readString()),
       updatedAt: DateTime.parse(reader.readString()),
     );
@@ -18,9 +19,10 @@ class NoteAdapter extends TypeAdapter<Note> {
 
   @override
   void write(BinaryWriter writer, Note obj) {
-    writer.writeInt(obj.id as int);
+    writer.writeString(obj.id);
     writer.writeString(obj.title);
     writer.writeString(obj.content);
+    writer.writeString(obj.category ?? '');
     writer.writeString(obj.createdAt.toIso8601String());
     writer.writeString(obj.updatedAt.toIso8601String());
   }

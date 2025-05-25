@@ -4,6 +4,7 @@ import 'package:advanced_notes_app/models/note_adapter.dart';
 import 'package:advanced_notes_app/providers/notes_provider.dart';
 import 'package:advanced_notes_app/router.dart';
 import 'package:advanced_notes_app/services/notes_services.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
@@ -25,7 +26,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (_) => NotesProvider(Hive.box<Note>('notes') as NotesService),
+      create: (_) => NotesProvider(locator<NotesService>()),
       child: MaterialApp.router(
         routerConfig: _appRouter.config(),
         theme: ThemeData(
@@ -50,6 +51,16 @@ class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
 
   void _incrementCounter() {
+    final notesProvider = Provider.of<NotesProvider>(context, listen: false);
+    final note = Note(
+      id: '$_counter',
+      title: 'Test Note $_counter',
+      content: 'This is a test note',
+      category: 'General',
+      createdAt: DateTime.now(),
+      updatedAt: DateTime.now(),
+    );
+    notesProvider.addNote(note);
     setState(() {
       _counter++;
     });
@@ -61,6 +72,12 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(widget.title),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.home),
+            onPressed: () => context.router.push(const HomeRoute()),
+          ),
+        ],
       ),
       body: Center(
         child: Column(
@@ -83,4 +100,10 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
     );
   }
+}
+
+class HomeRoute extends PageRouteInfo<void> {
+  const HomeRoute() : super(name, args: '/');
+
+  static const String name = 'HomeRoute';
 }

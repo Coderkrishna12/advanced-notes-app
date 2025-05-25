@@ -1,3 +1,4 @@
+// TODO Implement this library.
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -93,12 +94,16 @@ class AddEditNoteRoute extends PageRouteInfo {
   const AddEditNoteRoute({Note? note})
       : super(AddEditNoteRoute.name, args: note);
   static const String name = 'AddEditNoteRoute';
+
+  static var page;
 }
 
 class NoteDetailRoute extends PageRouteInfo<NoteDetailRouteArgs> {
   NoteDetailRoute({required Note note})
       : super(NoteDetailRoute.name, args: NoteDetailRouteArgs(note: note));
   static const String name = 'NoteDetailRoute';
+
+  static var page;
 }
 
 class NoteDetailRouteArgs {

@@ -24,17 +24,17 @@ class NotesProvider with ChangeNotifier {
   }
 
   Future<void> addNote(Note note) async {
-    await _notesService.addNote(note);
+    _notesService.addNote(note);
     await loadNotes();
   }
 
   Future<void> updateNote(Note note) async {
-    await _notesService.updateNote(note);
+    _notesService.updateNote(note);
     await loadNotes();
   }
 
   Future<void> deleteNote(String id) async {
-    await _notesService.deleteNote(id);
+    _notesService.deleteNote(id);
     await loadNotes();
   }
 }

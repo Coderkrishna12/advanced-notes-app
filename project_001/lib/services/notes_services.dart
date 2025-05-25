@@ -1,28 +1,41 @@
 import 'package:hive/hive.dart';
-import '../models/note.dart';
-import 'package:uuid/uuid.dart';
+import 'package:advanced_notes_app/models/note.dart';
 
-class NotesService {
-  static const String boxName = 'notes';
-  late Box<Note> _box;
+abstract class NotesService {
+  Future<void> init();
+  List<Note> getAllNotes();
+  void addNote(Note note);
+  void updateNote(Note note);
+  void deleteNote(String id);
+}
 
+class HiveNotesService implements NotesService {
+  final Box<Note> _notesBox;
+
+  HiveNotesService(this._notesBox);
+
+  @override
   Future<void> init() async {
-    _box = await Hive.openBox<Note>(boxName);
+    // Perform any initialization if needed
+    // For Hive, the box is already opened in main.dart, so this can be empty
+    // Add any additional setup logic here if required
   }
 
-  Future<List<Note>> getAllNotes() async {
-    return _box.values.toList();
+  @override
+  List<Note> getAllNotes() => _notesBox.values.toList();
+
+  @override
+  void addNote(Note note) {
+    _notesBox.put(note.id, note);
   }
 
-  Future<void> addNote(Note note) async {
-    await _box.put(note.id, note);
+  @override
+  void updateNote(Note note) {
+    _notesBox.put(note.id, note);
   }
 
-  Future<void> updateNote(Note note) async {
-    await _box.put(note.id, note);
-  }
-
-  Future<void> deleteNote(String id) async {
-    await _box.delete(id);
+  @override
+  void deleteNote(String id) {
+    _notesBox.delete(id);
   }
 }
