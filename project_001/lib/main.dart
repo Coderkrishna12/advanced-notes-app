@@ -1,12 +1,14 @@
 import 'package:advanced_notes_app/models/note_adapter.dart';
-import 'package:advanced_notes_app/router.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:advanced_notes_app/models/note.dart';
+import 'package:advanced_notes_app/router.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
-  Hive.registerAdapter(NoteAdapterAdapter());
+  Hive.registerAdapter(NoteAdapter()); // Register the adapter
+  await Hive.openBox<Note>('notes');
   runApp(MyApp());
 }
 
@@ -17,12 +19,16 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp.router(
       routerConfig: _appRouter.config(),
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        useMaterial3: true,
+      ),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
+  const MyHomePage({super.key, this.title = 'Flutter Demo Home Page'});
 
   final String title;
 

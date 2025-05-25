@@ -1,39 +1,29 @@
 import 'package:hive/hive.dart';
-import 'note.dart';
+import 'package:advanced_notes_app/models/note.dart';
 
-part 'note_adapter.g.dart';
-
-@HiveType(typeId: 0)
-class NoteAdapter implements Note {
-  @HiveField(0)
-  final String id;
-  @HiveField(1)
-  final String title;
-  @HiveField(2)
-  final String content;
-  @HiveField(3)
-  final String? category;
-  @HiveField(4)
-  final DateTime createdAt;
-  @HiveField(5)
-  final DateTime updatedAt;
-
-  NoteAdapter({
-    required this.id,
-    required this.title,
-    required this.content,
-    this.category,
-    required this.createdAt,
-    required this.updatedAt,
-  });
+class NoteAdapter extends TypeAdapter<Note> {
+  @override
+  final int typeId = 0; // Must match the typeId in Note
 
   @override
-  // TODO: implement copyWith
-  $NoteCopyWith<Note> get copyWith => throw UnimplementedError();
+  Note read(BinaryReader reader) {
+    return Note(
+      id: reader.readString(),
+      title: reader.readString(),
+      content: reader.readString(),
+      category: reader.readString(),
+      createdAt: DateTime.parse(reader.readString()),
+      updatedAt: DateTime.parse(reader.readString()),
+    );
+  }
 
   @override
-  Map<String, dynamic> toJson() {
-    // TODO: implement toJson
-    throw UnimplementedError();
+  void write(BinaryWriter writer, Note obj) {
+    writer.writeString(obj.id);
+    writer.writeString(obj.title);
+    writer.writeString(obj.content);
+    writer.writeString(obj.category ?? ''); // Handle nullable category
+    writer.writeString(obj.createdAt.toIso8601String());
+    writer.writeString(obj.updatedAt.toIso8601String());
   }
 }

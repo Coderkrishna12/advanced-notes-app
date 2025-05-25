@@ -177,7 +177,7 @@ class _$NoteImpl implements _Note {
       required this.updatedAt});
 
   factory _$NoteImpl.fromJson(Map<String, dynamic> json) =>
-      _$$NoteImplFromJson(json);
+      _$$NoteImplFromJson(json) as _$NoteImpl;
 
   @override
   final String id;
@@ -229,7 +229,7 @@ class _$NoteImpl implements _Note {
   @override
   Map<String, dynamic> toJson() {
     return _$$NoteImplToJson(
-      this,
+      this as NoteImpl,
     );
   }
 }

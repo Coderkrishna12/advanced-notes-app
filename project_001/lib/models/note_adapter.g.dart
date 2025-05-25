@@ -1,41 +1,27 @@
-// GENERATED CODE - DO NOT MODIFY BY HAND
+import 'package:hive/hive.dart';
+import 'package:advanced_notes_app/models/note.dart';
 
-part of 'note_adapter.dart';
-
-// **************************************************************************
-// TypeAdapterGenerator
-// **************************************************************************
-
-class NoteAdapterAdapter extends TypeAdapter<NoteAdapter> {
+class NoteAdapter extends TypeAdapter<Note> {
   @override
-  final int typeId = 0;
+  final int typeId = 0; // Unique ID for the Note type
 
   @override
-  NoteAdapter read(BinaryReader reader) {
-    final numOfFields = reader.readByte();
-    final fields = <int, dynamic>{
-      for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
-    };
-    return NoteAdapter(
-        id: '',
-        content: '',
-        updatedAt: DateTime.now(),
-        title: '',
-        createdAt: DateTime.now());
+  Note read(BinaryReader reader) {
+    return Note(
+      id: reader.readString(),
+      title: reader.readString(),
+      content: reader.readString(),
+      createdAt: DateTime.parse(reader.readString()),
+      updatedAt: DateTime.parse(reader.readString()),
+    );
   }
 
   @override
-  void write(BinaryWriter writer, NoteAdapter obj) {
-    writer.writeByte(0);
+  void write(BinaryWriter writer, Note obj) {
+    writer.writeInt(obj.id as int);
+    writer.writeString(obj.title);
+    writer.writeString(obj.content);
+    writer.writeString(obj.createdAt.toIso8601String());
+    writer.writeString(obj.updatedAt.toIso8601String());
   }
-
-  @override
-  int get hashCode => typeId.hashCode;
-
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is NoteAdapterAdapter &&
-          runtimeType == other.runtimeType &&
-          typeId == other.typeId;
 }
