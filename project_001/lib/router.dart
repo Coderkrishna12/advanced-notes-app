@@ -4,7 +4,8 @@ import 'package:advanced_notes_app/main.dart';
 import 'package:advanced_notes_app/screens/add_edit_note_screen.dart';
 import 'package:advanced_notes_app/screens/home_screen.dart';
 import 'package:advanced_notes_app/screens/note_detail_screen.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
+import 'package:advanced_notes_app/models/note.dart';
 
 part 'router.gr.dart';
 
