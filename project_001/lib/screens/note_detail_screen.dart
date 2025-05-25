@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:advanced_notes_app/models/note.dart';
 import 'package:advanced_notes_app/providers/notes_provider.dart';
-import 'package:advanced_notes_app/router.dart';
+import 'package:advanced_notes_app/router.dart' as app_router;
 
 @RoutePage()
 class NoteDetailScreen extends StatelessWidget {
@@ -20,7 +20,8 @@ class NoteDetailScreen extends StatelessWidget {
         actions: [
           IconButton(
             icon: const Icon(Icons.edit),
-            onPressed: () => context.router.push(AddEditNoteRoute(note: note)),
+            onPressed: () =>
+                context.router.push(app_router.AddEditNoteRoute(note: note)),
           ),
           IconButton(
             icon: const Icon(Icons.delete),

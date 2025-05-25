@@ -20,11 +20,17 @@ Note _$NoteFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Note {
+  @HiveField(0)
   String get id => throw _privateConstructorUsedError;
+  @HiveField(1)
   String get title => throw _privateConstructorUsedError;
+  @HiveField(2)
   String get content => throw _privateConstructorUsedError;
+  @HiveField(3)
   String? get category => throw _privateConstructorUsedError;
+  @HiveField(4)
   DateTime get createdAt => throw _privateConstructorUsedError;
+  @HiveField(5)
   DateTime get updatedAt => throw _privateConstructorUsedError;
 
   /// Serializes this Note to a JSON map.
@@ -42,12 +48,12 @@ abstract class $NoteCopyWith<$Res> {
       _$NoteCopyWithImpl<$Res, Note>;
   @useResult
   $Res call(
-      {String id,
-      String title,
-      String content,
-      String? category,
-      DateTime createdAt,
-      DateTime updatedAt});
+      {@HiveField(0) String id,
+      @HiveField(1) String title,
+      @HiveField(2) String content,
+      @HiveField(3) String? category,
+      @HiveField(4) DateTime createdAt,
+      @HiveField(5) DateTime updatedAt});
 }
 
 /// @nodoc
@@ -109,12 +115,12 @@ abstract class _$$NoteImplCopyWith<$Res> implements $NoteCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {String id,
-      String title,
-      String content,
-      String? category,
-      DateTime createdAt,
-      DateTime updatedAt});
+      {@HiveField(0) String id,
+      @HiveField(1) String title,
+      @HiveField(2) String content,
+      @HiveField(3) String? category,
+      @HiveField(4) DateTime createdAt,
+      @HiveField(5) DateTime updatedAt});
 }
 
 /// @nodoc
@@ -169,27 +175,33 @@ class __$$NoteImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$NoteImpl implements _Note {
   const _$NoteImpl(
-      {required this.id,
-      required this.title,
-      required this.content,
-      this.category,
-      required this.createdAt,
-      required this.updatedAt});
+      {@HiveField(0) required this.id,
+      @HiveField(1) required this.title,
+      @HiveField(2) required this.content,
+      @HiveField(3) this.category,
+      @HiveField(4) required this.createdAt,
+      @HiveField(5) required this.updatedAt});
 
   factory _$NoteImpl.fromJson(Map<String, dynamic> json) =>
-      _$$NoteImplFromJson(json) as _$NoteImpl;
+      _$$NoteImplFromJson(json);
 
   @override
+  @HiveField(0)
   final String id;
   @override
+  @HiveField(1)
   final String title;
   @override
+  @HiveField(2)
   final String content;
   @override
+  @HiveField(3)
   final String? category;
   @override
+  @HiveField(4)
   final DateTime createdAt;
   @override
+  @HiveField(5)
   final DateTime updatedAt;
 
   @override
@@ -229,33 +241,39 @@ class _$NoteImpl implements _Note {
   @override
   Map<String, dynamic> toJson() {
     return _$$NoteImplToJson(
-      this as NoteImpl,
+      this,
     );
   }
 }
 
 abstract class _Note implements Note {
   const factory _Note(
-      {required final String id,
-      required final String title,
-      required final String content,
-      final String? category,
-      required final DateTime createdAt,
-      required final DateTime updatedAt}) = _$NoteImpl;
+      {@HiveField(0) required final String id,
+      @HiveField(1) required final String title,
+      @HiveField(2) required final String content,
+      @HiveField(3) final String? category,
+      @HiveField(4) required final DateTime createdAt,
+      @HiveField(5) required final DateTime updatedAt}) = _$NoteImpl;
 
   factory _Note.fromJson(Map<String, dynamic> json) = _$NoteImpl.fromJson;
 
   @override
+  @HiveField(0)
   String get id;
   @override
+  @HiveField(1)
   String get title;
   @override
+  @HiveField(2)
   String get content;
   @override
+  @HiveField(3)
   String? get category;
   @override
+  @HiveField(4)
   DateTime get createdAt;
   @override
+  @HiveField(5)
   DateTime get updatedAt;
 
   /// Create a copy of Note

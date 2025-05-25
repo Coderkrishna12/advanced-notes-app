@@ -3,10 +3,63 @@
 part of 'note.dart';
 
 // **************************************************************************
+// TypeAdapterGenerator
+// **************************************************************************
+
+class NoteAdapter extends TypeAdapter<Note> {
+  @override
+  final int typeId = 0;
+
+  @override
+  Note read(BinaryReader reader) {
+    final numOfFields = reader.readByte();
+    final fields = <int, dynamic>{
+      for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
+    };
+    return Note(
+      id: fields[0] as String,
+      title: fields[1] as String,
+      content: fields[2] as String,
+      category: fields[3] as String?,
+      createdAt: fields[4] as DateTime,
+      updatedAt: fields[5] as DateTime,
+    );
+  }
+
+  @override
+  void write(BinaryWriter writer, Note obj) {
+    writer
+      ..writeByte(6)
+      ..writeByte(0)
+      ..write(obj.id)
+      ..writeByte(1)
+      ..write(obj.title)
+      ..writeByte(2)
+      ..write(obj.content)
+      ..writeByte(3)
+      ..write(obj.category)
+      ..writeByte(4)
+      ..write(obj.createdAt)
+      ..writeByte(5)
+      ..write(obj.updatedAt);
+  }
+
+  @override
+  int get hashCode => typeId.hashCode;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is NoteAdapter &&
+          runtimeType == other.runtimeType &&
+          typeId == other.typeId;
+}
+
+// **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-NoteImpl _$$NoteImplFromJson(Map<String, dynamic> json) => NoteImpl(
+_$NoteImpl _$$NoteImplFromJson(Map<String, dynamic> json) => _$NoteImpl(
       id: json['id'] as String,
       title: json['title'] as String,
       content: json['content'] as String,
@@ -15,25 +68,8 @@ NoteImpl _$$NoteImplFromJson(Map<String, dynamic> json) => NoteImpl(
       updatedAt: DateTime.parse(json['updatedAt'] as String),
     );
 
-class NoteImpl {
-  final String id;
-  final String title;
-  final String content;
-  final String? category;
-  final DateTime createdAt;
-  final DateTime updatedAt;
-
-  NoteImpl({
-    required this.id,
-    required this.title,
-    required this.content,
-    this.category,
-    required this.createdAt,
-    required this.updatedAt,
-  });
-}
-
-Map<String, dynamic> _$$NoteImplToJson(NoteImpl instance) => <String, dynamic>{
+Map<String, dynamic> _$$NoteImplToJson(_$NoteImpl instance) =>
+    <String, dynamic>{
       'id': instance.id,
       'title': instance.title,
       'content': instance.content,
