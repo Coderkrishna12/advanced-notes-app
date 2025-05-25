@@ -8,3 +8,7 @@ class AppRouter extends RootStackRouter {
         // Add other routes later
       ];
 }
+
+class HomeRoute {
+  static var page;
+}
